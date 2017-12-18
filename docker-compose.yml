@@ -12,11 +12,11 @@ networks:
 
 services:
 
-  ethminer-0:
+  ethminer:
     build:
       context: .
       dockerfile: Dockerfile.${ARCH}
-    image: ianblenke/ethminer:${ARCH}
+    image: sofwerx/ethminer:${ARCH}
     restart: always
     build: .
     volumes:
@@ -38,87 +38,113 @@ services:
       GPU_MAX_ALLOC_PERCENT: 100
       GPU_SINGLE_ALLOC_PERCENT: 100
       CUDA_VISIBLE_DEVICES: 0
-    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-0
-  
-  ethminer-1:
-    build:
-      context: .
-      dockerfile: Dockerfile.${ARCH}
-    image: ianblenke/ethminer:${ARCH}
-    restart: always
-    volumes:
-      - nvidia_driver:/usr/local/nvidia:ro
-    devices:
-      - /dev/nvidia0
-      - /dev/nvidia1
-      - /dev/nvidia2
-      - /dev/nvidia3
-      - /dev/nvidiactl
-      - /dev/nvidia-uvm
-      - /dev/nvidia-uvm-tools
-    networks:
-      - swxgpu_default
-    environment:
-      GPU_FORCE_64BIT_PTR: 0
-      GPU_MAX_HEAP_SIZE: 100
-      GPU_USE_SYNC_OBJECTS: 1
-      GPU_MAX_ALLOC_PERCENT: 100
-      GPU_SINGLE_ALLOC_PERCENT: 100
-      CUDA_VISIBLE_DEVICES: 1
-    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-1
-  
-  ethminer-2:
-    build:
-      context: .
-      dockerfile: Dockerfile.${ARCH}
-    image: ianblenke/ethminer:${ARCH}
-    restart: always
-    volumes:
-      - nvidia_driver:/usr/local/nvidia:ro
-    devices:
-      - /dev/nvidia0
-      - /dev/nvidia1
-      - /dev/nvidia2
-      - /dev/nvidia3
-      - /dev/nvidiactl
-      - /dev/nvidia-uvm
-      - /dev/nvidia-uvm-tools
-    networks:
-      - swxgpu_default
-    environment:
-      GPU_FORCE_64BIT_PTR: 0
-      GPU_MAX_HEAP_SIZE: 100
-      GPU_USE_SYNC_OBJECTS: 1
-      GPU_MAX_ALLOC_PERCENT: 100
-      GPU_SINGLE_ALLOC_PERCENT: 100
-      CUDA_VISIBLE_DEVICES: 2
-    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-2
-  
-  ethminer-3:
-    build:
-      context: .
-      dockerfile: Dockerfile.${ARCH}
-    image: ianblenke/ethminer:${ARCH}
-    restart: always
-    volumes:
-      - nvidia_driver:/usr/local/nvidia:ro
-    devices:
-      - /dev/nvidia0
-      - /dev/nvidia1
-      - /dev/nvidia2
-      - /dev/nvidia3
-      - /dev/nvidiactl
-      - /dev/nvidia-uvm
-      - /dev/nvidia-uvm-tools
-    networks:
-      - swxgpu_default
-    environment:
-      GPU_FORCE_64BIT_PTR: 0
-      GPU_MAX_HEAP_SIZE: 100
-      GPU_USE_SYNC_OBJECTS: 1
-      GPU_MAX_ALLOC_PERCENT: 100
-      GPU_SINGLE_ALLOC_PERCENT: 100
-      CUDA_VISIBLE_DEVICES: 3
-    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-3
-  
+    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu
 
+#  ethminer-0:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.${ARCH}
+#    image: sofwerx/ethminer:${ARCH}
+#    restart: always
+#    build: .
+#    volumes:
+#      - nvidia_driver:/usr/local/nvidia:ro
+#    devices:
+#      - /dev/nvidia0
+#      - /dev/nvidia1
+#      - /dev/nvidia2
+#      - /dev/nvidia3
+#      - /dev/nvidiactl
+#      - /dev/nvidia-uvm
+#      - /dev/nvidia-uvm-tools
+#    networks:
+#      - swxgpu_default
+#    environment:
+#      GPU_FORCE_64BIT_PTR: 0
+#      GPU_MAX_HEAP_SIZE: 100
+#      GPU_USE_SYNC_OBJECTS: 1
+#      GPU_MAX_ALLOC_PERCENT: 100
+#      GPU_SINGLE_ALLOC_PERCENT: 100
+#      CUDA_VISIBLE_DEVICES: 0
+#    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-0
+#  
+#  ethminer-1:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.${ARCH}
+#    image: sofwerx/ethminer:${ARCH}
+#    restart: always
+#    volumes:
+#      - nvidia_driver:/usr/local/nvidia:ro
+#    devices:
+#      - /dev/nvidia0
+#      - /dev/nvidia1
+#      - /dev/nvidia2
+#      - /dev/nvidia3
+#      - /dev/nvidiactl
+#      - /dev/nvidia-uvm
+#      - /dev/nvidia-uvm-tools
+#    networks:
+#      - swxgpu_default
+#    environment:
+#      GPU_FORCE_64BIT_PTR: 0
+#      GPU_MAX_HEAP_SIZE: 100
+#      GPU_USE_SYNC_OBJECTS: 1
+#      GPU_MAX_ALLOC_PERCENT: 100
+#      GPU_SINGLE_ALLOC_PERCENT: 100
+#      CUDA_VISIBLE_DEVICES: 1
+#    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-1
+#  
+#  ethminer-2:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.${ARCH}
+#    image: sofwerx/ethminer:${ARCH}
+#    restart: always
+#    volumes:
+#      - nvidia_driver:/usr/local/nvidia:ro
+#    devices:
+#      - /dev/nvidia0
+#      - /dev/nvidia1
+#      - /dev/nvidia2
+#      - /dev/nvidia3
+#      - /dev/nvidiactl
+#      - /dev/nvidia-uvm
+#      - /dev/nvidia-uvm-tools
+#    networks:
+#      - swxgpu_default
+#    environment:
+#      GPU_FORCE_64BIT_PTR: 0
+#      GPU_MAX_HEAP_SIZE: 100
+#      GPU_USE_SYNC_OBJECTS: 1
+#      GPU_MAX_ALLOC_PERCENT: 100
+#      GPU_SINGLE_ALLOC_PERCENT: 100
+#      CUDA_VISIBLE_DEVICES: 2
+#    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-2
+#  
+#  ethminer-3:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.${ARCH}
+#    image: sofwerx/ethminer:${ARCH}
+#    restart: always
+#    volumes:
+#      - nvidia_driver:/usr/local/nvidia:ro
+#    devices:
+#      - /dev/nvidia0
+#      - /dev/nvidia1
+#      - /dev/nvidia2
+#      - /dev/nvidia3
+#      - /dev/nvidiactl
+#      - /dev/nvidia-uvm
+#      - /dev/nvidia-uvm-tools
+#    networks:
+#      - swxgpu_default
+#    environment:
+#      GPU_FORCE_64BIT_PTR: 0
+#      GPU_MAX_HEAP_SIZE: 100
+#      GPU_USE_SYNC_OBJECTS: 1
+#      GPU_MAX_ALLOC_PERCENT: 100
+#      GPU_SINGLE_ALLOC_PERCENT: 100
+#      CUDA_VISIBLE_DEVICES: 3
+#    command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu-3
