@@ -5,11 +5,6 @@ volumes:
     external:
       name: "nvidia_driver_384.81"
 
-networks:
-  swxgpu_default:
-    external:
-      name: swxgpu_default
-
 services:
 
   ethminer:
@@ -29,15 +24,12 @@ services:
       - /dev/nvidiactl
       - /dev/nvidia-uvm
       - /dev/nvidia-uvm-tools
-    networks:
-      - swxgpu_default
     environment:
       GPU_FORCE_64BIT_PTR: 0
       GPU_MAX_HEAP_SIZE: 100
       GPU_USE_SYNC_OBJECTS: 1
       GPU_MAX_ALLOC_PERCENT: 100
       GPU_SINGLE_ALLOC_PERCENT: 100
-      CUDA_VISIBLE_DEVICES: 0
     command: /ethminer/build/ethminer/ethminer --cuda-parallel-hash 8 --farm-recheck 200 -U -S us1.ethermine.org:4444 -FS us2.ethermine.org:4444 -O 2c0859b9312d9bf93e1b4cae8d47d59030a75a9f.swx-gpu
 
 #  ethminer-0:
@@ -57,8 +49,6 @@ services:
 #      - /dev/nvidiactl
 #      - /dev/nvidia-uvm
 #      - /dev/nvidia-uvm-tools
-#    networks:
-#      - swxgpu_default
 #    environment:
 #      GPU_FORCE_64BIT_PTR: 0
 #      GPU_MAX_HEAP_SIZE: 100
@@ -84,8 +74,6 @@ services:
 #      - /dev/nvidiactl
 #      - /dev/nvidia-uvm
 #      - /dev/nvidia-uvm-tools
-#    networks:
-#      - swxgpu_default
 #    environment:
 #      GPU_FORCE_64BIT_PTR: 0
 #      GPU_MAX_HEAP_SIZE: 100
@@ -111,8 +99,6 @@ services:
 #      - /dev/nvidiactl
 #      - /dev/nvidia-uvm
 #      - /dev/nvidia-uvm-tools
-#    networks:
-#      - swxgpu_default
 #    environment:
 #      GPU_FORCE_64BIT_PTR: 0
 #      GPU_MAX_HEAP_SIZE: 100
@@ -138,8 +124,6 @@ services:
 #      - /dev/nvidiactl
 #      - /dev/nvidia-uvm
 #      - /dev/nvidia-uvm-tools
-#    networks:
-#      - swxgpu_default
 #    environment:
 #      GPU_FORCE_64BIT_PTR: 0
 #      GPU_MAX_HEAP_SIZE: 100
