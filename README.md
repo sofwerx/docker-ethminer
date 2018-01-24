@@ -16,6 +16,12 @@ Your installed nvidia driver version may differ from `384.81`.
 
 # usage:
 
+If you have `nvidia-docker` v1, use `docker-compose`
+
+Alternatively, if you have `vidia-docker` v2, use `make`
+
+# docker-compose (vmware-docker v1)
+
 Edit `docker-compose.yml` to:
 
 - Replace the `384.81` with your currently installed nvidia driver version.
@@ -24,4 +30,12 @@ Edit `docker-compose.yml` to:
 Then run:
 
     ARCH=$(uname -p) docker-compose up -d
+
+# make (vmware-docker v2)
+
+No need to edit anything. Just run:
+
+    make ARCH=$(uname -p)
+
+
 
