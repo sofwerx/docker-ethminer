@@ -37,5 +37,9 @@ No need to edit anything. Just run:
 
     make ARCH=$(uname -p)
 
+# issues
 
+If you see an initialization error the following command should correct and allow the Makefile to run:
+
+	#sudo rmmod nvidia-uvm
 
