@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 
 volumes:
   nvidia_driver:
@@ -13,7 +13,6 @@ services:
       dockerfile: Dockerfile.${ARCH}
     image: sofwerx/ethminer:${ARCH}
     restart: always
-    build: .
     volumes:
       - nvidia_driver:/usr/local/nvidia:ro
     devices:
