@@ -1,0 +1,54 @@
+FROM nvidia/cuda-ppc64le:8.0-devel-ubuntu16.04
+
+cuda-9-0-local.list:deb file:///var/cuda-repo-9-0-local /
+docker.list:deb [arch=arm64] https://download.docker.com/linux/ubuntu xenial stable
+nv-tensorrt-ga-cuda9.0-trt3.0.4-20180208.list:deb file:///var/nv-tensorrt-repo-ga-cuda9.0-trt3.0.4-20180208 /
+visionworks-repo.list:deb-src file:///var/visionworks-repo /
+visionworks-repo.list:deb file:///var/visionworks-repo /
+visionworks-sfm-repo.list:deb-src file:///var/visionworks-sfm-repo /
+visionworks-sfm-repo.list:deb file:///var/visionworks-sfm-repo /
+visionworks-tracking-repo.list:deb-src file:///var/visionworks-tracking-repo /
+visionworks-tracking-repo.list:deb file:///var/visionworks-tracking-repo /
+
+
+ARG repository
+FROM ${repository}:8.0-runtime-ubuntu16.04
+LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        cuda-core-$CUDA_PKG_VERSION \
+        cuda-misc-headers-$CUDA_PKG_VERSION \
+        cuda-command-line-tools-$CUDA_PKG_VERSION \
+        cuda-nvrtc-dev-$CUDA_PKG_VERSION \
+        cuda-nvml-dev-$CUDA_PKG_VERSION \
+        cuda-nvgraph-dev-$CUDA_PKG_VERSION \
+        cuda-cusolver-dev-$CUDA_PKG_VERSION \
+        cuda-cublas-dev-8-0=8.0.61.2-1 \
+        cuda-cufft-dev-$CUDA_PKG_VERSION \
+        cuda-curand-dev-$CUDA_PKG_VERSION \
+        cuda-cusparse-dev-$CUDA_PKG_VERSION \
+        cuda-npp-dev-$CUDA_PKG_VERSION \
+        cuda-cudart-dev-$CUDA_PKG_VERSION \
+        cuda-driver-dev-$CUDA_PKG_VERSION && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs:${LIBRARY_PATH}
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get install -y build-essential git cmake
+
+RUN git clone https://github.com/ethereum-mining/ethminer /ethminer
+
+WORKDIR /ethminer
+RUN git checkout tags/v0.12.0
+
+WORKDIR /
+
+#RUN apt-cache search opencl
+#RUN apt-get install -y nvidia-opencl-icd-384 nvidia-opencl-dev
+
+RUN cmake .. -DETHASHCUDA=ON -DETHSTRATUM=ON -DETHASHCL=OFF
+RUN make
+RUN make install
+
